@@ -1,0 +1,13 @@
+.DS_Store
+.Thumbs.db
+debug.log
+**/node_modules
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sublime*
