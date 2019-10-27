@@ -1,12 +1,35 @@
-
-const routes = [
+const routes = [{
+  path: '/',
+  component: () => import('layouts/MyLayout.vue'),
+  children: [{
+    path: '',
+    component: () => import('pages/Index.vue')
+  },
   {
-    path: '/',
-    component: () => import('layouts/MyLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Index.vue') }
-    ]
+    path: 'user',
+    name: 'User',
+    component: () => import('pages/User.vue'),
+    meta: {
+      requiresAuth: true
+    }
   }
+  ]
+},
+{
+  path: '/auth',
+  component: () => import('layouts/MyLayout.vue'),
+  children: [{
+    path: 'login',
+    name: 'Login',
+    component: () => import('pages/Auth.vue')
+  },
+  {
+    path: 'registration',
+    name: 'Registration',
+    component: () => import('pages/Auth.vue')
+  }
+  ]
+}
 ]
 
 // Always leave this as last one
