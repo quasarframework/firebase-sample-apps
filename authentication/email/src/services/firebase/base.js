@@ -28,7 +28,7 @@ export const ensureAuthIsInitialized = async (store) => {
       resolve(user)
       unsubscribe()
     }, () => {
-      reject('Looks like there is a problem with the firebase service. Please try again later')
+      reject(new Error('Looks like there is a problem with the firebase service. Please try again later'))
     })
   })
 }
