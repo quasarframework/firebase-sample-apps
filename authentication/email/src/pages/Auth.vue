@@ -1,0 +1,112 @@
+<template>
+  <q-page padding>
+    <h5 class="text-center">Authentication</h5>
+    <q-form class="authentication q-gutter-y-md" ref="emailAuthenticationForm" @submit="onSubmit">
+      <q-input
+        v-model="email"
+        name="email"
+        outlined="outlined"
+        lazy-rules="lazy-rules"
+        autocomplete="email"
+        color="primary"
+        data-cy="email"
+        label="EMAIL"
+        type="email"
+        :rules="[val => !!val || '*Field is required', val => val.includes('@') && val.includes('.') || '*Please Provide a valid email']"
+      />
+      <q-input
+        v-model="password"
+        lazy-rules="lazy-rules"
+        outlined="outlined"
+        autocomplete="current-password new-password"
+        color="primary"
+        data-cy="password"
+        label="PASSWORD"
+        :rules="[val =&gt; !!val || '*Field is required']" :type="isPwd ? 'password' : 'text'"
+        @keyup.enter="onSubmit(); $event.target.blur()"
+      >
+        <template v-slot:append>
+          <q-icon class="cursor-pointer" :name="isPwd ? 'visibility_off' : 'visibility'" @click="isPwd = !isPwd" />
+        </template>
+      </q-input>
+      <q-input
+        v-if="isRegistration"
+        lazy-rules="lazy-rules"
+        outlined="outlined"
+        autocomplete="new-password"
+        color="primary"
+        data-cy="verifyPassword"
+        label="VERIFY PASSWORD"
+        v-model="passwordMatch"
+        :rules="[val => !!val || '*Field is required', val => val === password || '*Passwords don\'t match']"
+        :type="isPwd ? 'password' : 'text'"
+        @keyup.enter="onSubmit(); $event.target.blur()"
+      >
+        <template v-slot:append>
+          <q-icon class="cursor-pointer" :name="isPwd ? 'visibility_off' : 'visibility'" @click="isPwd = !isPwd" />
+        </template>
+      </q-input>
+      <q-btn
+        class="full-width q-mt-md"
+        color="primary"
+        data-cy="submit"
+        :label="getAuthType"
+        :loading="loading"
+        @click="onSubmit"
+      >
+        <template v-slot:loading>
+          <q-spinner-gears />
+        </template>
+      </q-btn>
+    </q-form>
+  </q-page>
+</template>
+
+<script>
+import { mapActions, mapGetters } from 'vuex'
+export default {
+  name: 'Auth',
+  computed: {
+    ...mapGetters('common', ['loading']),
+    getAuthType () {
+      return this.isRegistration ? 'Register' : 'Login'
+    },
+    isRegistration () {
+      return this.$route.name === 'Register'
+    }
+  },
+  data () {
+    return {
+      email: null,
+      isPwd: true,
+      password: null,
+      passwordMatch: null
+    }
+  },
+  methods: {
+    ...mapActions('auth', ['createNewUser', 'loginUser']),
+    handleUser () {},
+    onSubmit () {
+      const { email, password } = this
+      this.$refs.emailAuthenticationForm.validate()
+        .then(async success => {
+          if (success) {
+            if (this.isRegistration) {
+              await this.createNewUser({ email, password })
+            } else {
+              await this.loginUser({ email, password })
+            }
+            this.$router.push({ path: '/user' })
+          }
+        })
+    }
+  }
+}
+</script>
+
+<style lang="stylus">
+.authentication
+  margin auto
+  max-width 30em
+  width 100%
+</style>
