@@ -72,7 +72,7 @@ export default {
       return this.isRegistration ? 'Register' : 'Login'
     },
     isRegistration () {
-      return this.$route.name === 'Registration'
+      return this.$route.name === 'Register'
     }
   },
   data () {
@@ -92,16 +92,11 @@ export default {
         .then(async success => {
           if (success) {
             if (this.isRegistration) {
-              const user = await this.createNewUser({ email, password })
-              if (user) {
-                this.$router.push({ path: '/user' })
-              }
+              await this.createNewUser({ email, password })
             } else {
-              const user = await this.loginUser({ email, password })
-              if (user) {
-                this.$router.push({ path: '/user' })
-              }
+              await this.loginUser({ email, password })
             }
+            this.$router.push({ path: '/user' })
           }
         })
     }

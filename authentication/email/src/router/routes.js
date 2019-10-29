@@ -24,8 +24,8 @@ const routes = [{
     component: () => import('pages/Auth.vue')
   },
   {
-    path: 'registration',
-    name: 'Registration',
+    path: 'register',
+    name: 'Register',
     component: () => import('pages/Auth.vue')
   }
   ]
