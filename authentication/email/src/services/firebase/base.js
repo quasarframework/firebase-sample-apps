@@ -25,7 +25,7 @@ export const ensureAuthIsInitialized = async (store) => {
   return new Promise((resolve, reject) => {
     // Use a promise to make sure that the router will eventually show the route after the auth is initialized.
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
-      resolve(user)
+      resolve()
       unsubscribe()
     }, () => {
       reject(new Error('Looks like there is a problem with the firebase service. Please try again later'))
