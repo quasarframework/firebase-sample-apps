@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <h5 class="text-center">Authentication</h5>
+    <h5 class="text-center">{{ getAuthType }}</h5>
     <q-form class="authentication q-gutter-y-md" ref="emailAuthenticationForm" @submit="onSubmit">
       <q-input
         v-model="email"
@@ -58,6 +58,8 @@
           <q-spinner-gears />
         </template>
       </q-btn>
+      <p v-if="isRegistration" class="text-body1">Do you need to <router-link to="/auth/login">login</router-link>?</p>
+      <p v-else class="text-body1">Do you need to <router-link to="/auth/register">register</router-link>?</p>
     </q-form>
   </q-page>
 </template>
