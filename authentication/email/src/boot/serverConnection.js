@@ -1,18 +1,27 @@
 import * as base from '../services/firebase/base.js'
+import * as email from '../services/firebase/email.js'
 
-const firebaseService = Object.assign({}, base)
+const firebaseService = Object.assign({}, base, email)
 
 // "async" is optional
-export default async () => {
+export default ({
+  router,
+  store,
+  Vue
+}) => {
   const config = process.env.environments.FIREBASE_CONFIG
-  try {
-    await firebaseService.fBInit(config)
-    // Just a validation that our service structure is working
-    // This does not guartee that the initialization happened
-    // with a valid api key. This will be done when the app
-    // performs any auth() functionality
-    console.log('Firebase init called properly')
-  } catch (err) {
-    throw Error(`Error in firebase initilization: ${err}`)
-  }
+  firebaseService.fBInit(config)
+
+  // Auth
+  firebaseService.auth().onAuthStateChanged((user) => {
+    firebaseService.handleOnAuthStateChanged(store, user)
+  }, (error) => {
+    console.error(error)
+  })
+
+  // Setup the router to be intercepted
+  firebaseService.routerBeforeEach(router, store)
+
+  Vue.prototype.$fb = firebaseService
+  store.$fb = firebaseService
 }
