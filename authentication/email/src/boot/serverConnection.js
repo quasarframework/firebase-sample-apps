@@ -19,9 +19,8 @@ export default ({
     console.error(error)
   })
 
-  router.beforeEach(async (to, from, next) => {
-    firebaseService.routerBeforeEach(to, from, next, store)
-  })
+  // Setup the router to be intercepted
+  firebaseService.routerBeforeEach(router, store)
 
   Vue.prototype.$fb = firebaseService
   store.$fb = firebaseService

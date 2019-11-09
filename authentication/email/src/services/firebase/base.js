@@ -17,7 +17,6 @@ export const auth = () => {
  * wait for firebase to initialize and determine if a
  * user is authenticated or not with only a single observable
  *
- * @return {Promise} - authPromise
  */
 export const ensureAuthIsInitialized = async (store) => {
   if (store.state.auth.isReady) return true
@@ -57,8 +56,8 @@ export const logoutUser = () => {
 
 /** Handle the auth state of the user and
  * set it in the auth store module
- * @param  {Object} store
- * @param  {Object} currentUser
+ * @param  {Object} store - Vuex Store
+ * @param  {Object} currentUser - Firebase currentUser
  */
 export const handleOnAuthStateChanged = async (store, currentUser) => {
   const initialAuthStateSet = isAuthenticated(store)
@@ -75,28 +74,28 @@ export const handleOnAuthStateChanged = async (store, currentUser) => {
     store.dispatch('common/routeUserToAuth')
   }
 }
-
 /**
- * @param  {Object} to - From Vue Router
- * @param  {Object} from - From Vue Router
- * @param  {Object} next - From Vue Router
+ * @param  {Object} router - Vue Router
+ * @param  {Object} store - Vuex Store
  */
-export const routerBeforeEach = async (to, from, next, store) => {
-  try {
-    await ensureAuthIsInitialized(store)
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-      if (isAuthenticated(store)) {
-        next()
+export const routerBeforeEach = async (router, store) => {
+  router.beforeEach(async (to, from, next) => {
+    try {
+      await ensureAuthIsInitialized(store)
+      if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (isAuthenticated(store)) {
+          next()
+        } else {
+          next('/auth/login')
+        }
       } else {
-        next('/auth/login')
+        next()
       }
-    } else {
-      next()
+    } catch (err) {
+      Notify.create({
+        message: `${err}`,
+        color: 'negative'
+      })
     }
-  } catch (err) {
-    Notify.create({
-      message: `${err}`,
-      color: 'negative'
-    })
-  }
+  })
 }
