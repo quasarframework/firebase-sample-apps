@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Quasar Sample App: Anonymous Authentication
+          {{ productName }}
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
@@ -103,7 +103,11 @@
 <script>
 export default {
   name: 'MyLayout',
-
+  computed: {
+    productName () {
+      return window.sessionStorage.productName
+    }
+  },
   data () {
     return {
       leftDrawerOpen: false
