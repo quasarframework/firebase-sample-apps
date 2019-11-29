@@ -74,6 +74,7 @@ export const handleOnAuthStateChanged = async (store, currentUser) => {
     store.dispatch('common/routeUserToAuth')
   }
 }
+
 /**
  * @param  {Object} router - Vue Router
  * @param  {Object} store - Vuex Store
