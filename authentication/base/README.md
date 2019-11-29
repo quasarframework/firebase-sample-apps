@@ -1,6 +1,5 @@
-# Firebase Sample App: Base (base)
-
-Basis implementation of firebase service
+# Firebase Sample App: Base
+Base implementation of Google's Firebase service.
 
 ## Install the dependencies
 ```bash
@@ -8,19 +7,11 @@ yarn
 ```
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
+*Note: This application makes use of [Qusar's QENV app extension](https://github.com/quasarframework/app-extension-qenv).*
 ```bash
-quasar dev
+npm run dev
 ```
 
-### Lint the files
-```bash
-yarn run lint
-```
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
+### Areas of focus
+- `serverConnetion.js` implmentation
+- First Firebase service, `base.js`, created and used
