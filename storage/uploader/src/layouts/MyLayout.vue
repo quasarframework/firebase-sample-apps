@@ -85,7 +85,7 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view @setBlur="setBlur" />
     </q-page-container>
   </q-layout>
 </template>
@@ -102,6 +102,17 @@ export default {
     return {
       leftDrawerOpen: false
     }
+  },
+  methods: {
+    setBlur () {
+      this.blurLayout = !this.blurLayout
+    }
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+  .user
+    &.blur-layout
+      filter blur(5px)
+</style>

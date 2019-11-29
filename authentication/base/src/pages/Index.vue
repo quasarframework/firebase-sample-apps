@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <img alt="Quasar logo" src="~assets/sample-app-logo.png" height="300px">
+    <img alt="Quasar logo" src="~assets/sample-app-logo.png" height="326px">
   </q-page>
 </template>
 
