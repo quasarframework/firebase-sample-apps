@@ -20,10 +20,14 @@
             </div>
         </div>
         <div class="text-weight-bold text-h4">{{ currentUser.fullName }}</div>
-        <div class="text-h6">{{ currentUser.email }}</div>
         <div class="user-info q-mt-lg">
-            <div class="row col-6"><label class="col text-h6 text-bold text-left">Mobile Number:</label>
-                <p class="col text-h6 text-bold">{{ currentUser.mobile }}</p>
+            <div class="row justify-between">
+              <label class="text-h6 text-body1">Email:</label>
+              <p class="text-h6 text-body1 ">{{ currentUser.email }}</p>
+            </div>
+            <div class="row justify-between">
+              <label class="text-body1 text-left">Mobile Number:</label>
+              <p class="text-body1 text-right">{{ currentUser.mobile }}</p>
             </div>
         </div>
     </div>
@@ -80,7 +84,7 @@ export default {
     position relative
     text-align center
     background rgba(0,0,0,0)
-    top -4.5em
+    top -5.2em
   .user-info
     margin 2em auto
     max-width 24em
