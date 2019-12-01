@@ -30,34 +30,29 @@
             <div class="row justify-between items-center q-mb-lg"><label class="col-3" for="mobile">Mobile</label>
                 <q-input class="col" id="mobile" v-model="mobile" borderless="borderless" dense="dense" hint="+1(###) ###-####" mask="+#(###) ###-####" type="text"></q-input>
             </div>
-            <div class="row justify-between items-center q-mb-sm"><label class="col-3" for="street">Address</label>
-                <q-input class="col no-wrap" id="street" v-model="street" borderless="borderless" dense="dense" hint="Street Address" type="text"></q-input>
-            </div>
-            <div class="row justify-between items-center q-mb-sm"><label class="col-3" for="cityState"></label>
-                <q-input class="col" id="cityState" v-model="cityState" borderless="borderless" dense="dense" hint="City, State" type="text"></q-input>
-            </div>
-            <div class="row justify-between items-center q-mb-sm"><label class="col-3" for="mobile"></label>
-                <q-input class="col no-wrap" id="zipCode" v-model="zipCode" borderless="borderless" dense="dense" hint="Zipcode" type="text"></q-input>
-            </div>
         </section>
-        <div class="row justify-between q-my-lg q-px-md">
+        <div class="row justify-between q-my-lg q-px-md absolute-bottom">
             <q-btn color="primary" label="CANCEL" style="min-width:6em;" @click="setEditUserDialog(false)"></q-btn>
             <q-btn color="primary" type="submit" label="SAVE" style="min-width:6em;"></q-btn>
         </div>
     </q-form>
     <q-dialog v-model="photoUpload" transition-hide="scale" transition-show="scale" @before-hide="resetPhotoType">
-        <q-card>
-            <p class="text-dialog bg-primary text-white q-mb-none q-pa-sm"><span v-if="photoUploading">Your photo is uploading...<q-spinner-gears></q-spinner-gears></span><span v-else>Please upload a new photo.</span></p>
-            <q-input type="file" value="upload" @change="uploadPhoto"></q-input>
-        </q-card>
+        <q-uploader
+          class="q-my-lg"
+          label="Please Upload a Photo"
+          :factory="uploadPhoto"
+          @uploaded="uploadComplete"
+        ></q-uploader>
     </q-dialog>
 </div>
 </template>
 
 <script>
 import { mapActions, mapMutations } from 'vuex'
+import { QUploaderBase } from 'quasar'
 export default {
   name: 'UserSettings',
+  mixins: [ QUploaderBase ],
   data () {
     // hacky
     const state = this.$store.state.user.currentUser
@@ -87,12 +82,9 @@ export default {
     async saveUserData () {
       const {
         currentUser,
-        cityState,
         email,
         fullName,
-        mobile,
-        street,
-        zipCode
+        mobile
       } = this
       this.$q.loading.show({
         message: 'Updating your data, please stand by...',
@@ -100,12 +92,9 @@ export default {
       })
       await this.updateUserData({
         id: currentUser.id,
-        cityState,
         email,
         fullName,
-        mobile,
-        street,
-        zipCode
+        mobile
       })
       this.$q.loading.hide()
       this.setEditUserDialog(false)
@@ -124,21 +113,31 @@ export default {
       this.photoUpload = true
       this.photoType = type
     },
-    async uploadPhoto (e) {
+    uploadComplete (info) {
+      let fileNames = []
+      info.files.forEach(v => fileNames.push(v.name))
+      this.photoUpload = false
+      this.$q.notify({
+        message: `Successfully uploaded your photo: ${fileNames}`,
+        color: 'positive'
+      })
+    },
+    async uploadPhoto (files) {
       const
-        file = e.target.files[0],
+        file = files[0],
         fileSuffix = file.type.split('/')[1]
+
       const payload = {
         id: this.currentUser.id,
         file,
         fileSuffix,
         photoType: this.photoType
       }
-      this.photoUploading = true
-      await this.submitPhotoImage(payload)
-      this.photoUpload = false
-      this.photoUploading = false
-      this.resetPhotoType()
+      if (this.canUpload === false) {
+        const link = await this.submitPhotoImage(payload)
+        this.resetPhotoType()
+        return { url: link }
+      }
     }
   }
 }

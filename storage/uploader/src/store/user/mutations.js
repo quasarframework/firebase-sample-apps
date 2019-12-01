@@ -1,5 +1,5 @@
 export const setCurrentUserData = (state, data) => {
-  state = Object.assign(state, data)
+  state.currentUser = data
 }
 
 export const setEditUserDialog = (state, editUserDialog) => {

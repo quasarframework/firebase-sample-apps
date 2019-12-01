@@ -20,11 +20,8 @@ export const submitPhotoImage = async function ({ state }, payload) {
     const profileImageStorageRef = await storageRef(`${id}/${photoType}Photo/${photoType}Photo.` + fileSuffix)
     const snapShot = await storagePut(profileImageStorageRef, file)
     const link = await snapShot.ref.getDownloadURL()
-    await Promise.all([
-      userRef('users', id).update({
-        [`${photoType}Photo`]: link
-      })
-    ])
+    await userRef('users', id).update({ [`${photoType}Photo`]: link })
+    return link
   } catch (err) {
     console.error(err)
     Notify.create({

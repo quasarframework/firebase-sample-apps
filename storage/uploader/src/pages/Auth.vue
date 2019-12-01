@@ -98,7 +98,7 @@ export default {
             } else {
               await this.loginUser({ email, password })
             }
-            this.$router.push({ path: '/user' })
+            this.$router.push({ path: '/user/profile' })
           }
         })
     }

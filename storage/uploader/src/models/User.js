@@ -3,16 +3,10 @@
 export default class User {
   id = ''
   backgroundPhoto = ''
-  cityState = ''
   email = ''
   fullName = ''
   mobile = ''
-  DOB = ''
-  personaType = ''
   profilePhoto = ''
-  status = 'active'
-  street = ''
-  zipCode = ''
 
   /**
    * @param  {Object} args - User args
