@@ -4,7 +4,7 @@
       <img alt="Quasar logo" src="~assets/sample-app-logo.png" height="326px" width="300px">
     </div>
     <div class="q-px-lg text-h6 text-center">
-      <router-link to="auth/register">Register</router-link> a new account or <router-link to="auth/login">Login</router-link>.
+      <router-link to="auth/register">Register</router-link> a new account or <router-link to="auth/login">log in</router-link>.
     </div>
   </q-page>
 </template>
