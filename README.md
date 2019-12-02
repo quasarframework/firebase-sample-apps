@@ -5,13 +5,9 @@ Each application is meant to be considered in conjunction with the documents pre
 
 ## **Applications**
 ### **Base Implementation**
+  - Firebase Initialization
+  - Base Service & Structure
 ### **Email Authentication**
-### **Phone Authentication**
-### **Anonymous Authentication**
-### **Data Store Integration**
-  - Firestore
-  - RTDB
-### **Messaging**
-### **Storage**
-### **SSR**
-### **Vuex**
+  - Create and Login Users
+### **Data Integration**
+  - User Profile
