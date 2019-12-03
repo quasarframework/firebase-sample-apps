@@ -46,7 +46,7 @@ module.exports = function (ctx) {
       directives: [],
 
       // Quasar plugins
-      plugins: ['Loading', 'Notify']
+      plugins: []
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
@@ -97,9 +97,9 @@ module.exports = function (ctx) {
       // workboxPluginMode: 'InjectManifest',
       // workboxOptions: {}, // only for NON InjectManifest
       manifest: {
-        // name: 'Firebase Sample App: Email',
-        // short_name: 'Firebase Sample App: Email',
-        // description: 'Email authentication implementation with Firebase',
+        // name: 'Firebase Sample App: Base',
+        // short_name: 'Firebase Sample App: Base',
+        // description: 'Basis implementation of firebase service',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
@@ -165,7 +165,7 @@ module.exports = function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        // appId: 'email'
+        // appId: 'base'
       }
     }
   }

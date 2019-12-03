@@ -3,9 +3,11 @@ import { firestoreAction } from 'vuexfire'
 import User from '../../models/User.js'
 
 export const addUserToUsersCollection = async (state, userRef) => {
-  const user = new User({
-    email: state.email
-  })
+  const
+    { email } = state,
+    user = new User({
+      email
+    })
   try {
     await userRef.set(user)
     return user
@@ -22,8 +24,7 @@ export const createNewUser = async function ({ dispatch, commit }, data) {
     const fbAuthResponse = await $fb.createUserWithEmail(email, password)
     const id = fbAuthResponse.user.uid
     const userRef = $fb.userRef('users', id)
-    const newUser = await addUserToUsersCollection({ email }, userRef)
-    commit('user/setCurrentUserData', newUser, { root: true })
+    await addUserToUsersCollection({ email }, userRef)
   } catch (err) {
     Notify.create({
       message: `An error as occured: ${err}`,

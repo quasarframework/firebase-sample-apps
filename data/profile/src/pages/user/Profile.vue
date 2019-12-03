@@ -84,7 +84,7 @@ export default {
     position relative
     text-align center
     background rgba(0,0,0,0)
-    top -5.2em
+    top -4.6em
   .user-info
     margin 2em auto
     max-width 24em

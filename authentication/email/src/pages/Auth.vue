@@ -66,6 +66,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import { QSpinnerGears } from 'quasar'
 export default {
   name: 'Auth',
   computed: {
@@ -92,6 +93,13 @@ export default {
       const { email, password } = this
       this.$refs.emailAuthenticationForm.validate()
         .then(async success => {
+          this.$q.loading.show({
+            message: this.isRegistration ? 'Registering your account...'
+              : 'Authenticating your account...',
+            backgroundColor: 'grey',
+            spinner: QSpinnerGears,
+            customClass: 'auth-loader'
+          })
           if (success) {
             if (this.isRegistration) {
               await this.createNewUser({ email, password })
@@ -100,6 +108,7 @@ export default {
             }
             this.$router.push({ path: '/user' })
           }
+          this.$q.loading.hide()
         })
     }
   }
@@ -111,4 +120,9 @@ export default {
   margin auto
   max-width 30em
   width 100%
+
+.auth-loader
+  font-size 2em
+  &:before
+    opacity .9!important
 </style>

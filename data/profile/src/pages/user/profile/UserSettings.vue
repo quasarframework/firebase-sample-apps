@@ -54,7 +54,6 @@ export default {
   name: 'UserSettings',
   mixins: [ QUploaderBase ],
   data () {
-    // hacky
     const state = this.$store.state.user.currentUser
     return {
       cityState: state.cityState,

@@ -1,12 +1,12 @@
 import { firestoreAction } from 'vuexfire'
-import { userRef, storagePut, storageRef } from '../../services/firebase/db.js'
+import { userRef, storageRef } from '../../services/firebase/db.js'
 import { Notify } from 'quasar'
 
 /** getUser - Get current user from the firestore
  * collection user's via firebase uid
  * @param  {Ojbect} payload.id - Firebase currentUser id
  */
-export const getCurrentUser = firestoreAction(async function ({ bindFirestoreRef }, id) {
+export const getCurrentUser = firestoreAction(async ({ bindFirestoreRef }, id) => {
   return bindFirestoreRef('currentUser', userRef('users', id))
 })
 
@@ -18,7 +18,8 @@ export const submitPhotoImage = async function ({ state }, payload) {
   const { id, file, fileSuffix, photoType } = payload
   try {
     const profileImageStorageRef = await storageRef(`${id}/${photoType}Photo/${photoType}Photo.` + fileSuffix)
-    const snapShot = await storagePut(profileImageStorageRef, file)
+    // TODO: REFACTOR AND USE THE STORAGE PUT METHOD HERE
+    const snapShot = await profileImageStorageRef.put(file)
     const link = await snapShot.ref.getDownloadURL()
     await userRef('users', id).update({ [`${photoType}Photo`]: link })
     return link
@@ -38,9 +39,7 @@ export const submitPhotoImage = async function ({ state }, payload) {
  */
 export const updateUserData = async function ({ state }, payload) {
   try {
-    await Promise.all([
-      userRef('users', payload.id).update(payload)
-    ])
+    await userRef('users', payload.id).update(payload)
   } catch (err) {
     Notify.create({
       message: `Looks like a probelm updating your profile: ${err}`,
