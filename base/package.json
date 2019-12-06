@@ -2,7 +2,7 @@
   "name": "base",
   "version": "0.0.1",
   "description": "Basic implementation of firebase service",
-  "productName": "Firebase Sample App: Base",
+  "productName": "Firebase Sample App: Base Service",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
   "author": "Adam K. Purdy <admin@kpapro.com>",

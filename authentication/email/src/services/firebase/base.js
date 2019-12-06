@@ -60,7 +60,7 @@ export const logoutUser = () => {
  * @param  {Object} currentUser - Firebase currentUser
  */
 export const handleOnAuthStateChanged = async (store, currentUser) => {
-  const initialAuthStateSet = isAuthenticated(store)
+  const initialAuthState = isAuthenticated(store)
   // Save to the store
   store.commit('auth/setAuthState', {
     isAuthenticated: currentUser !== null,
@@ -68,11 +68,18 @@ export const handleOnAuthStateChanged = async (store, currentUser) => {
     isSignedIn: currentUser !== null
   })
 
-  // If the user looses authentication route
+  // If the user loses authentication route
   // them to the login page
-  if (!currentUser && initialAuthStateSet) {
+  if (!currentUser && initialAuthState) {
     store.dispatch('common/routeUserToAuth')
   }
+}
+
+/**
+ * @param  {Stirng} email - email from reset password form
+ */
+export const resetPassword = (email) => {
+  return auth().sendPasswordResetEmail(email)
 }
 
 /**
@@ -82,6 +89,9 @@ export const handleOnAuthStateChanged = async (store, currentUser) => {
 export const routerBeforeEach = async (router, store) => {
   router.beforeEach(async (to, from, next) => {
     try {
+      // Force the app to wait until Firebase has
+      // finished its initialization, and handle the
+      // authentication state of the user properly
       await ensureAuthIsInitialized(store)
       if (to.matched.some(record => record.meta.requiresAuth)) {
         if (isAuthenticated(store)) {

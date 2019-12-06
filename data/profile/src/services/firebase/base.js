@@ -60,7 +60,7 @@ export const logoutUser = () => {
  * @param  {Object} currentUser - Firebase currentUser
  */
 export const handleOnAuthStateChanged = async (store, currentUser) => {
-  const initialAuthStateSet = isAuthenticated(store)
+  const initialAuthState = isAuthenticated(store)
   // Save to the store
   store.commit('auth/setAuthState', {
     isAuthenticated: currentUser !== null,
@@ -75,7 +75,7 @@ export const handleOnAuthStateChanged = async (store, currentUser) => {
 
   // If the user looses authentication route
   // them to the login page
-  if (!currentUser && initialAuthStateSet) {
+  if (!currentUser && initialAuthState) {
     store.dispatch('common/routeUserToAuth')
   }
 }

@@ -58,8 +58,15 @@
           <q-spinner-gears />
         </template>
       </q-btn>
-      <p v-if="isRegistration" class="text-body1">Do you need to <router-link to="/auth/login">login</router-link>?</p>
-      <p v-else class="text-body1">Do you need to <router-link to="/auth/register">register</router-link>?</p>
+      <p class="q-mt-md q-mb-none text-center">
+          <router-link class="text-blue" :to="routeAuthentication">
+            <span v-if="isRegistration">Need to login?</span>
+            <span v-else>Need to create an account?</span>
+          </router-link>
+      </p>
+      <p class="q-ma-sm text-center">
+          <router-link class="text-blue" to="forgotPassword">Forgot Password?</router-link>
+      </p>
     </q-form>
   </q-page>
 </template>
@@ -76,6 +83,9 @@ export default {
     },
     isRegistration () {
       return this.$route.name === 'Register'
+    },
+    routeAuthentication () {
+      return this.isRegistration ? '/auth/login' : '/auth/register'
     }
   },
   data () {
