@@ -12,8 +12,8 @@ export const getCurrentUser = firestoreAction(({ bindFirestoreRef }, id) => {
 })
 
 /**
- * @param  {Object} {state}
- * @param  {Object} payload
+ * @param  {Object} {state} - Vuex
+ * @param  {Object} payload - User file info
  */
 export const submitPhotoImage = async function ({ state }, payload) {
   const { id, file, fileSuffix, photoType } = payload

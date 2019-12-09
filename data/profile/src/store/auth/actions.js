@@ -26,7 +26,7 @@ export const loginUser = async function ({ commit }, payload) {
 export const logoutUser = async function ({ commit }, payload) {
   await firestoreAction(({ unbindFirestoreRef }) => { unbindFirestoreRef('users') })
   commit('user/setCurrentUserData', null, { root: true })
-  await this.$fb.logoutUser()
+  this.$fb.logoutUser()
 }
 
 export function routeUserToAuth () {
