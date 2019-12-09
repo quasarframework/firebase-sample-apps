@@ -43,7 +43,7 @@ export default {
       this.$refs.forgotPasswordForm.validate()
         .then(async success => {
           this.$q.loading.show({
-            message: 'Attempting to reset your password.',
+            message: 'Attempting to reset your password...',
             backgroundColor: 'grey',
             spinner: QSpinnerGears,
             customClass: 'loader'

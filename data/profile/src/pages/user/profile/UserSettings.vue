@@ -56,15 +56,11 @@ export default {
   data () {
     const state = this.$store.state.user.currentUser
     return {
-      cityState: state.cityState,
       email: state.email,
       fullName: state.fullName,
       mobile: state.mobile,
       photoType: '',
-      photoUpload: false,
-      photoUploading: false,
-      street: state.street,
-      zipCode: state.zipCode
+      photoUpload: false
     }
   },
   computed: {
@@ -79,24 +75,29 @@ export default {
       this.photoType = ''
     },
     async saveUserData () {
-      const {
-        currentUser,
-        email,
-        fullName,
-        mobile
-      } = this
+      const { currentUser, email, fullName, mobile } = this
+
       this.$q.loading.show({
         message: 'Updating your data, please stand by...',
         customClass: 'text-h3, text-bold'
       })
-      await this.updateUserData({
-        id: currentUser.id,
-        email,
-        fullName,
-        mobile
-      })
-      this.$q.loading.hide()
-      this.setEditUserDialog(false)
+
+      try {
+        await this.updateUserData({
+          id: currentUser.id,
+          email,
+          fullName,
+          mobile
+        })
+      } catch (err) {
+        this.$q.notify({
+          message: `Looks like a probelm updating your profile: ${err}`,
+          color: 'negative'
+        })
+      } finally {
+        this.$q.loading.hide()
+        this.setEditUserDialog(false)
+      }
     },
     showBackgroundPhoto () {
       return this.currentUser.backgroundPhoto === '' ||
@@ -124,14 +125,14 @@ export default {
     async uploadPhoto (files) {
       const
         file = files[0],
-        fileSuffix = file.type.split('/')[1]
+        fileSuffix = file.type.split('/')[1],
+        payload = {
+          id: this.currentUser.id,
+          file,
+          fileSuffix,
+          photoType: this.photoType
+        }
 
-      const payload = {
-        id: this.currentUser.id,
-        file,
-        fileSuffix,
-        photoType: this.photoType
-      }
       if (this.canUpload === false) {
         const link = await this.submitPhotoImage(payload)
         this.resetPhotoType()

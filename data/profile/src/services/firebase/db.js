@@ -25,11 +25,3 @@ export const userRef = (collectionName, id) => {
 export const storageRef = (storageLocation) => {
   return firebase.storage().ref(storageLocation)
 }
-
-/**
- * @param  {DocRef} storageRef
- * @param  {Object} file
- */
-export const storagePut = (storageRef, file) => {
-  return storageRef.put(file)
-}

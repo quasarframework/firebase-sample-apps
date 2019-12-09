@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import { vuexfireMutations } from 'vuexfire'
 
 import auth from './auth'
-import common from './common'
 import user from './user'
 
 Vue.use(Vuex)
@@ -17,7 +16,6 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       auth,
-      common,
       user
     },
     mutations: {

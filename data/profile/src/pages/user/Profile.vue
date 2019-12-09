@@ -19,15 +19,15 @@
                 </q-avatar>
             </div>
         </div>
-        <div class="text-weight-bold text-h4">{{ currentUser.fullName }}</div>
+        <div class="text-weight-bold text-h6">{{ getUserData('fullName') }}</div>
         <div class="user-info q-mt-lg">
             <div class="row justify-between">
               <label class="text-h6 text-body1">Email:</label>
-              <p class="text-h6 text-body1 ">{{ currentUser.email }}</p>
+              <p class="text-h6 text-body1 ">{{ getUserData('email') }}</p>
             </div>
             <div class="row justify-between">
               <label class="text-body1 text-left">Mobile Number:</label>
-              <p class="text-body1 text-right">{{ currentUser.mobile }}</p>
+              <p class="text-body1 text-right">{{ getUserData('mobile') }}</p>
             </div>
         </div>
     </div>
@@ -40,6 +40,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import { QSpinnerGears } from 'quasar'
 export default {
   name: 'UserSettings',
   components: {
@@ -47,6 +48,14 @@ export default {
   },
   data () {
     return {}
+  },
+  created () {
+    this.$q.loading.show({
+      message: 'Loading your user information...',
+      backgroundColor: 'grey',
+      spinner: QSpinnerGears,
+      customClass: 'loader'
+    })
   },
   computed: {
     currentUser () {
@@ -63,6 +72,9 @@ export default {
   },
   methods: {
     ...mapMutations('user', ['setEditUserDialog']),
+    getUserData (attr) {
+      return (this.currentUser[attr]) ? this.currentUser[attr] : 'Please update your profile'
+    },
     setBlur () {
       this.$emit('setBlur')
     },
@@ -75,6 +87,11 @@ export default {
       return this.currentUser.profilePhoto === '' ||
         this.currentUser.profilePhoto === null ||
         this.currentUser.profilePhoto === undefined
+    }
+  },
+  watch: {
+    currentUser () {
+      this.$q.loading.hide()
     }
   }
 }

@@ -77,7 +77,6 @@ import { QSpinnerGears } from 'quasar'
 export default {
   name: 'Auth',
   computed: {
-    ...mapGetters('common', ['loading']),
     getAuthType () {
       return this.isRegistration ? 'Register' : 'Login'
     },
@@ -108,7 +107,7 @@ export default {
               : 'Authenticating your account...',
             backgroundColor: 'grey',
             spinner: QSpinnerGears,
-            customClass: 'auth-loader'
+            customClass: 'loader'
           })
           if (success) {
             if (this.isRegistration) {
@@ -130,9 +129,4 @@ export default {
   margin auto
   max-width 30em
   width 100%
-
-.auth-loader
-  font-size 2em
-  &:before
-    opacity .9!important
 </style>

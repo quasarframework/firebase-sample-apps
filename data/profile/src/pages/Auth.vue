@@ -51,30 +51,36 @@
         color="primary"
         data-cy="submit"
         :label="getAuthType"
-        :loading="loading"
         @click="onSubmit"
       >
-        <template v-slot:loading>
-          <q-spinner-gears />
-        </template>
       </q-btn>
-      <p v-if="isRegistration" class="text-body1">Do you need to <router-link to="/auth/login">login</router-link>?</p>
-      <p v-else class="text-body1">Do you need to <router-link to="/auth/register">register</router-link>?</p>
+      <p class="q-mt-md q-mb-none text-center">
+          <router-link class="text-primary" :to="routeAuthentication">
+            <span v-if="isRegistration">Need to login?</span>
+            <span v-else>Need to create an account?</span>
+          </router-link>
+      </p>
+      <p class="q-ma-sm text-center">
+          <router-link class="text-primary" to="forgotPassword">Forgot Password?</router-link>
+      </p>
     </q-form>
   </q-page>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
+import { QSpinnerGears } from 'quasar'
 export default {
   name: 'Auth',
   computed: {
-    ...mapGetters('common', ['loading']),
     getAuthType () {
       return this.isRegistration ? 'Register' : 'Login'
     },
     isRegistration () {
       return this.$route.name === 'Register'
+    },
+    routeAuthentication () {
+      return this.isRegistration ? '/auth/login' : '/auth/register'
     }
   },
   data () {
@@ -93,12 +99,30 @@ export default {
       this.$refs.emailAuthenticationForm.validate()
         .then(async success => {
           if (success) {
-            if (this.isRegistration) {
-              await this.createNewUser({ email, password })
-            } else {
-              await this.loginUser({ email, password })
+            this.$q.loading.show({
+              message: this.isRegistration
+                ? 'Registering your account...'
+                : 'Authenticating your account...',
+              backgroundColor: 'grey',
+              spinner: QSpinnerGears,
+              customClass: 'loader'
+            })
+            try {
+              if (this.isRegistration) {
+                await this.createNewUser({ email, password })
+              } else {
+                await this.loginUser({ email, password })
+              }
+              this.$router.push({ path: '/user/profile' })
+            } catch (err) {
+              console.error(err)
+              this.$q.notify({
+                message: `An error as occured: ${err}`,
+                color: 'negative'
+              })
+            } finally {
+              this.$q.loading.hide()
             }
-            this.$router.push({ path: '/user/profile' })
           }
         })
     }

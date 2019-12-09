@@ -1,5 +1,5 @@
 <template>
-  <q-layout class="main" :class="{ 'blur-layout': blurLayout }" view="lHh Lpr lFf">
+  <q-layout class="main" view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -81,50 +81,27 @@
             <q-item-label caption>@QuasarFramework</q-item-label>
           </q-item-section>
         </q-item>
-         <q-item v-if="currentUser" clickable @click="logoutUser()">
-          <q-item-section avatar>
-            <q-icon name="power_settings_new" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Logout</q-item-label>
-          </q-item-section>
-        </q-item>
       </q-list>
     </q-drawer>
 
     <q-page-container>
-      <router-view @setBlur="setBlur" />
+      <router-view />
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'MyLayout',
+  name: 'BasicLayout',
   computed: {
-    ...mapGetters('user', ['currentUser']),
     productName () {
       return window.sessionStorage.productName
     }
   },
   data () {
     return {
-      leftDrawerOpen: false,
-      blurLayout: false
-    }
-  },
-  methods: {
-    ...mapActions('auth', ['logoutUser']),
-    setBlur () {
-      this.blurLayout = !this.blurLayout
+      leftDrawerOpen: false
     }
   }
 }
 </script>
-
-<style lang="stylus" scoped>
-  .main
-    &.blur-layout
-      filter blur(5px)
-</style>
