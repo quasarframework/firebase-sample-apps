@@ -3,12 +3,7 @@ import * as email from '../services/firebase/email.js'
 
 const firebaseService = Object.assign({}, base, email)
 
-// "async" is optional
-export default ({
-  router,
-  store,
-  Vue
-}) => {
+export default ({ router, store, Vue }) => {
   const config = process.env.environments.FIREBASE_CONFIG
   firebaseService.fBInit(config)
 

@@ -71,15 +71,8 @@ export const handleOnAuthStateChanged = async (store, currentUser) => {
   // If the user loses authentication route
   // them to the login page
   if (!currentUser && initialAuthState) {
-    store.dispatch('common/routeUserToAuth')
+    store.dispatch('auth/routeUserToAuth')
   }
-}
-
-/**
- * @param  {Stirng} email - email from reset password form
- */
-export const resetPassword = (email) => {
-  return auth().sendPasswordResetEmail(email)
 }
 
 /**

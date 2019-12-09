@@ -51,12 +51,8 @@
         color="primary"
         data-cy="submit"
         :label="getAuthType"
-        :loading="loading"
         @click="onSubmit"
       >
-        <template v-slot:loading>
-          <q-spinner-gears />
-        </template>
       </q-btn>
       <p class="q-mt-md q-mb-none text-center">
           <router-link class="text-blue" :to="routeAuthentication">
@@ -72,7 +68,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import { QSpinnerGears } from 'quasar'
 export default {
   name: 'Auth',
@@ -110,14 +106,23 @@ export default {
             customClass: 'loader'
           })
           if (success) {
-            if (this.isRegistration) {
-              await this.createNewUser({ email, password })
-            } else {
-              await this.loginUser({ email, password })
+            try {
+              if (this.isRegistration) {
+                await this.createNewUser({ email, password })
+              } else {
+                await this.loginUser({ email, password })
+              }
+              this.$router.push({ path: '/user' })
+            } catch (err) {
+              console.error(err)
+              this.$q.notify({
+                message: `An error as occured: ${err}`,
+                color: 'negative'
+              })
+            } finally {
+              this.$q.loading.hide()
             }
-            this.$router.push({ path: '/user' })
           }
-          this.$q.loading.hide()
         })
     }
   }
