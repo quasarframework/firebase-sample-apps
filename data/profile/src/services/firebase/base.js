@@ -32,7 +32,7 @@ export const ensureAuthIsInitialized = async (store) => {
   })
 }
 
-/** Convienience method to initialize firebase app
+/** Convenience method to initialize firebase app
  * @param  {Object} config
  * @return {Object} App
  */
