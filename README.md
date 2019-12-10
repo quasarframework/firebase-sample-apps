@@ -8,7 +8,7 @@ Each application is meant to be considered in conjunction with the dev.to blog p
   - Firebase Initialization
   - Base Service & Structure
 ### **Email Authentication**
-  - Create and log in Users via Email & Password
+  - Create and log in users via Email & Password
 ### **Data Integration**
   - User Profile
   - Vuexfire
