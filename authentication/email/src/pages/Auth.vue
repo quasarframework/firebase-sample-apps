@@ -93,7 +93,6 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['createNewUser', 'loginUser']),
-    handleUser () {},
     onSubmit () {
       const { email, password } = this
       this.$refs.emailAuthenticationForm.validate()
