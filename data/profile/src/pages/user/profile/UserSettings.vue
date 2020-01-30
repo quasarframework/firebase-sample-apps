@@ -37,12 +37,13 @@
         </div>
     </q-form>
     <q-dialog v-model="photoUpload" transition-hide="scale" transition-show="scale" @before-hide="resetPhotoType">
-        <q-uploader
+        <fbq-uploader
           class="q-my-lg"
           label="Please Upload a Photo"
-          :factory="uploadPhoto"
+          :meta="meta"
+          :prefixPath="prefixPath"
           @uploaded="uploadComplete"
-        ></q-uploader>
+        ></fbq-uploader>
     </q-dialog>
 </div>
 </template>
@@ -53,6 +54,9 @@ import { QUploaderBase } from 'quasar'
 export default {
   name: 'UserSettings',
   mixins: [ QUploaderBase ],
+  components: {
+    'fbq-uploader': () => import('../../../components/FBQUploader.vue')
+  },
   data () {
     const state = this.$store.state.user.currentUser
     return {
@@ -66,10 +70,20 @@ export default {
   computed: {
     currentUser () {
       return this.$store.state.user.currentUser
+    },
+    meta () {
+      return {
+        id: this.currentUser.id,
+        photoType: this.photoType
+      }
+    },
+    prefixPath () {
+      const id = this.currentUser.id
+      return `${id}/${this.photoType}Photo/${this.photoType}Photo.`
     }
   },
   methods: {
-    ...mapActions('user', ['submitPhotoImage', 'updateUserData']),
+    ...mapActions('user', ['updateUserData']),
     ...mapMutations('user', ['setEditUserDialog']),
     resetPhotoType () {
       this.photoType = ''
@@ -113,31 +127,16 @@ export default {
       this.photoUpload = true
       this.photoType = type
     },
+
+    // USE THIS
     uploadComplete (info) {
       let fileNames = []
-      info.files.forEach(v => fileNames.push(v.name))
+      info.files.forEach(file => fileNames.push(file))
       this.photoUpload = false
       this.$q.notify({
         message: `Successfully uploaded your photo: ${fileNames}`,
         color: 'positive'
       })
-    },
-    async uploadPhoto (files) {
-      const
-        file = files[0],
-        fileSuffix = file.type.split('/')[1],
-        payload = {
-          id: this.currentUser.id,
-          file,
-          fileSuffix,
-          photoType: this.photoType
-        }
-
-      if (this.canUpload === false) {
-        const link = await this.submitPhotoImage(payload)
-        this.resetPhotoType()
-        return { url: link }
-      }
     }
   }
 }
