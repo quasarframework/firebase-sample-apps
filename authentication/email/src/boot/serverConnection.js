@@ -1,7 +1,4 @@
-import * as base from '../services/firebase/base.js'
-import * as email from '../services/firebase/email.js'
-
-const firebaseService = Object.assign({}, base, email)
+import firebaseService from '../services/firebase'
 
 export default ({ router, store, Vue }) => {
   const config = process.env.environments.FIREBASE_CONFIG

@@ -1,6 +1,4 @@
-import * as base from '../services/firebase/base.js'
-
-const firebaseService = Object.assign({}, base)
+import firebaseService from '../services/firebase'
 
 export default async () => {
   const config = process.env.environments.FIREBASE_CONFIG
