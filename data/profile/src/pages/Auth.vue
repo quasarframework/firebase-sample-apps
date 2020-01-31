@@ -50,8 +50,8 @@
         class="full-width q-mt-md"
         color="primary"
         data-cy="submit"
+        type="submit"
         :label="getAuthType"
-        @click="onSubmit"
       >
       </q-btn>
       <p class="q-mt-md q-mb-none text-center">

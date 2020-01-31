@@ -8,14 +8,14 @@
       <div class="inst q-mb-lg">Please enter your email and we will send you a link to reset your password.</div>
       <q-input
         v-model="email"
-        id="email"
-        name="email"
-        outlined="outlined"
-        lazy-rules="lazy-rules"
+        outlined
         autocomplete="email"
         color="primary"
         data-cy="email"
+        for="email"
         label="EMAIL"
+        lazy-rules="lazy-rules"
+        name="email"
         type="email"
         :rules="[val =&gt; !!val || '*Field is required', val =&gt; val.includes('@') &amp;&amp; val.includes('.') || '*Please Provide a valid email']"
       ></q-input>
