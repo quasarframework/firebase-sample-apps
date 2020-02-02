@@ -64,8 +64,7 @@ export const handleOnAuthStateChanged = async (store, currentUser) => {
   // Save to the store
   store.commit('auth/setAuthState', {
     isAuthenticated: currentUser !== null,
-    isReady: true,
-    isSignedIn: currentUser !== null
+    isReady: true
   })
 
   // If the user loses authentication route
