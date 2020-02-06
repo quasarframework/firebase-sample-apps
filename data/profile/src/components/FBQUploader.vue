@@ -1,8 +1,5 @@
 <script>
 import { QUploaderBase } from 'quasar'
-// import firebase from 'firebase/app'
-// import 'firebase/storage'
-// import { userRef, storageRef } from '../services/firebase/db.js'
 export default {
   name: 'FBQUploader',
 
