@@ -97,6 +97,8 @@ export default {
 }
 </script>
 <style lang="stylus">
+  .background-photo
+    cursor pointer
   .profile-container
     position relative
     text-align center

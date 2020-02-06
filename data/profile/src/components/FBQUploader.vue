@@ -1,8 +1,8 @@
 <script>
 import { QUploaderBase } from 'quasar'
-import firebase from 'firebase/app'
-import 'firebase/storage'
-import { userRef, storageRef } from '../services/firebase/db.js'
+// import firebase from 'firebase/app'
+// import 'firebase/storage'
+// import { userRef, storageRef } from '../services/firebase/db.js'
 export default {
   name: 'FBQUploader',
 
@@ -40,7 +40,7 @@ export default {
 
   methods: {
     // Required for QUploaderBase. Will not be
-    // used do to isBusy Overlay
+    // used. Use of isBusy Overlay instead
     abort () {},
 
     updateComponent (index, snapshot, status = 'uploading') {
@@ -75,15 +75,17 @@ export default {
 
     uploadFileToFirestore (file) {
       const { meta } = this,
+        { userRef, storageRef } = this.$fb,
         index = this.filesUploading.length,
         fileSuffix = file.type.split('/')[1],
         uploadImageStorageRef = storageRef(`${this.prefixPath}${fileSuffix}`),
-        profileImageStorageRef = uploadImageStorageRef.put(file)
+        profileImageStorageRef = uploadImageStorageRef.put(file),
+        STATE_CHANGED = this.$fb.self().storage.TaskEvent.STATE_CHANGED
 
       return new Promise((resolve, reject) => {
         // Firebase UploadTask Event
         profileImageStorageRef.on(
-          firebase.storage.TaskEvent.STATE_CHANGED,
+          STATE_CHANGED,
           (snapshot) => {
             this.updateComponent(index, snapshot)
           },

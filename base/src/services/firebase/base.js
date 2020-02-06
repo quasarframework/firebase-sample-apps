@@ -2,7 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 
 /**
- * Gets Firebase's auth service
+ * Returns Firebase's auth service
  * https://firebase.google.com/docs/reference/js/firebase.auth.html#callable
  * @return {Interface} The Firebase Auth service interface
  */

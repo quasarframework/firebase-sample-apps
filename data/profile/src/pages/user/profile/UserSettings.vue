@@ -78,8 +78,9 @@ export default {
       }
     },
     prefixPath () {
-      const id = this.currentUser.id
-      return `${id}/${this.photoType}Photo/${this.photoType}Photo.`
+      const id = this.currentUser.id,
+        path = `${id}/${this.photoType}Photo/${this.photoType}Photo.`
+      return path
     }
   },
   methods: {
@@ -105,7 +106,7 @@ export default {
         })
       } catch (err) {
         this.$q.notify({
-          message: `Looks like a probelm updating your profile: ${err}`,
+          message: `Looks like a problem updating your profile: ${err}`,
           color: 'negative'
         })
       } finally {
@@ -128,7 +129,6 @@ export default {
       this.photoType = type
     },
 
-    // USE THIS
     uploadComplete (info) {
       let fileNames = []
       info.files.forEach(file => fileNames.push(file))

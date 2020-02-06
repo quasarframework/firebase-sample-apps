@@ -4,8 +4,17 @@ import 'firebase/auth'
 import { Notify } from 'quasar'
 
 /**
- * Firebase's auth interfact method
- * https: //firebase.google.com/docs/reference/js/firebase.auth.html#callable
+ * Returns Firebase 's global namespace from which all Firebase services are accessed
+ * https://firebase.google.com/docs/reference/js/firebase.auth.html#callable
+ * @return {Object} Firebase Module
+ */
+export const self = () => {
+  return firebase
+}
+
+/**
+ * Returns Firebase 's auth service
+ * https://firebase.google.com/docs/reference/js/firebase.auth.html#callable
  * @return {Object} currentUser object from firebase
  */
 export const auth = () => {
@@ -93,7 +102,7 @@ export const routerBeforeEach = async (router, store) => {
       }
     } catch (err) {
       Notify.create({
-        message: `${err}`,
+        message: `ROUTER BEFORE EACH: ${err}`,
         color: 'negative'
       })
     }

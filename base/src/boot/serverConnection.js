@@ -5,6 +5,7 @@ export default async () => {
   firebaseService.fBInit(config)
 
   // Validation that our service structure is working
-  // with a valid api key.
-  console.log(firebaseService.auth(), 'Firebase has been initialized with a valid key')
+  // with a firebase app instance. Does not validate a
+  // valid API key.
+  console.log(firebaseService.auth())
 }
