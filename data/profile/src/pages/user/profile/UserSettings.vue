@@ -49,97 +49,97 @@
 </template>
 
 <script>
-  import { mapActions, mapMutations } from 'vuex'
-  import { QUploaderBase } from 'quasar'
-  export default {
-    name: 'UserSettings',
-    mixins: [ QUploaderBase ],
-    components: {
-      'fbq-uploader': () => import('../../../components/FBQUploader.vue')
+import { mapActions, mapMutations } from 'vuex'
+import { QUploaderBase } from 'quasar'
+export default {
+  name: 'UserSettings',
+  mixins: [ QUploaderBase ],
+  components: {
+    'fbq-uploader': () => import('../../../components/FBQUploader.vue')
+  },
+  data () {
+    const state = this.$store.state.user.currentUser
+    return {
+      email: state.email,
+      fullName: state.fullName,
+      mobile: state.mobile,
+      photoType: '',
+      photoUpload: false
+    }
+  },
+  computed: {
+    currentUser () {
+      return this.$store.state.user.currentUser
     },
-    data () {
-      const state = this.$store.state.user.currentUser
+    meta () {
       return {
-        email: state.email,
-        fullName: state.fullName,
-        mobile: state.mobile,
-        photoType: '',
-        photoUpload: false
+        id: this.currentUser.id,
+        photoType: this.photoType
       }
     },
-    computed: {
-      currentUser () {
-        return this.$store.state.user.currentUser
-      },
-      meta () {
-        return {
-          id: this.currentUser.id,
-          photoType: this.photoType
-        }
-      },
-      prefixPath () {
-        const id = this.currentUser.id,
-          path = `${id}/${this.photoType}Photo/${this.photoType}Photo.`
-        return path
-      }
+    prefixPath () {
+      const id = this.currentUser.id,
+        path = `${id}/${this.photoType}Photo/${this.photoType}Photo.`
+      return path
+    }
+  },
+  methods: {
+    ...mapActions('user', ['updateUserData']),
+    ...mapMutations('user', ['setEditUserDialog']),
+    resetPhotoType () {
+      this.photoType = ''
     },
-    methods: {
-      ...mapActions('user', ['updateUserData']),
-      ...mapMutations('user', ['setEditUserDialog']),
-      resetPhotoType () {
-        this.photoType = ''
-      },
-      async saveUserData () {
-        const { currentUser, email, fullName, mobile } = this
+    async saveUserData () {
+      const { currentUser, email, fullName, mobile } = this
 
-        this.$q.loading.show({
-          message: 'Updating your data, please stand by...',
-          customClass: 'text-h3, text-bold'
+      this.$q.loading.show({
+        message: 'Updating your data, please stand by...',
+        customClass: 'text-h3, text-bold'
+      })
+
+      try {
+        await this.updateUserData({
+          id: currentUser.id,
+          email,
+          fullName,
+          mobile
         })
-
-        try {
-          await this.updateUserData({
-            id: currentUser.id,
-            email,
-            fullName,
-            mobile
-          })
-        } catch (err) {
-          this.$q.notify({
-            message: `Looks like a problem updating your profile: ${err}`,
-            color: 'negative'
-          })
-        } finally {
-          this.$q.loading.hide()
-          this.setEditUserDialog(false)
-        }
-      },
-      showBackgroundPhoto () {
-        return this.currentUser.backgroundPhoto === '' ||
+      } catch (err) {
+        this.$q.notify({
+          message: `Looks like a problem updating your profile: ${err}`,
+          color: 'negative'
+        })
+      } finally {
+        this.$q.loading.hide()
+        this.setEditUserDialog(false)
+      }
+    },
+    showBackgroundPhoto () {
+      return this.currentUser.backgroundPhoto === '' ||
           this.currentUser.backgroundPhoto === null ||
           this.currentUser.backgroundPhoto === undefined
-      },
-      showDefaultPhoto () {
-        return this.currentUser.profilePhoto === '' ||
+    },
+    showDefaultPhoto () {
+      return this.currentUser.profilePhoto === '' ||
           this.currentUser.profilePhoto === null ||
           this.currentUser.profilePhoto === undefined
-      },
-      showPhotoUpload (type) {
-        this.photoUpload = true
-        this.photoType = type
-      },
+    },
+    showPhotoUpload (type) {
+      this.photoUpload = true
+      this.photoType = type
+    },
 
-      uploadComplete (info) {
-        let fileNames = []
-        info.files.forEach(file => fileNames.push(file))
-        this.photoUpload = false
-        this.$q.notify({
-          message: `Successfully uploaded your photo: ${fileNames}`,
-          color: 'positive'
-        })
-      }
+    uploadComplete (info) {
+      let fileNames = []
+      info.files.forEach(file => fileNames.push(file))
+      this.photoUpload = false
+      this.$q.notify({
+        message: `Successfully uploaded your photo: ${fileNames}`,
+        color: 'positive'
+      })
     }
   }
+}
 </script>
 <style lang="stylus">
   .user-settings

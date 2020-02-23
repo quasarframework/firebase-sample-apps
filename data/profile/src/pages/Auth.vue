@@ -22,8 +22,13 @@
         color="primary"
         data-cy="password"
         label="PASSWORD"
-        :rules="[val =&gt; !!val || '*Field is required']" :type="isPwd ? 'password' : 'text'"
-        @keyup.enter="onSubmit(); $event.target.blur()"
+        :rules="[val => !!val || '*Field is required']" :type="isPwd ? 'password' : 'text'"
+        @keyup.enter="
+          () => {
+            onSubmit();
+            $event.target.blur();
+          }
+        "
       >
         <template v-slot:append>
           <q-icon class="cursor-pointer" :name="isPwd ? 'visibility_off' : 'visibility'" @click="isPwd = !isPwd" />
@@ -40,7 +45,12 @@
         v-model="passwordMatch"
         :rules="[val => !!val || '*Field is required', val => val === password || '*Passwords don\'t match']"
         :type="isPwd ? 'password' : 'text'"
-        @keyup.enter="onSubmit(); $event.target.blur()"
+        @keyup.enter="
+          () => {
+            onSubmit();
+            $event.target.blur();
+          }
+        "
       >
         <template v-slot:append>
           <q-icon class="cursor-pointer" :name="isPwd ? 'visibility_off' : 'visibility'" @click="isPwd = !isPwd" />

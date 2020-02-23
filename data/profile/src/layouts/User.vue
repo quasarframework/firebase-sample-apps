@@ -99,35 +99,35 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'
-  export default {
-    name: 'UserLayout',
-    computed: {
-      ...mapGetters('user', ['currentUser']),
-      productName () {
-        return window.sessionStorage.productName
-      }
-    },
-    created () {
-      const id = this.$fb.auth().currentUser.uid
-      this.getCurrentUser(id).then(result => {
-        this.$store.commit('user/setCurrentUserData', result)
-      })
-    },
-    data () {
-      return {
-        leftDrawerOpen: false,
-        blurLayout: false
-      }
-    },
-    methods: {
-      ...mapActions('auth', ['logoutUser']),
-      ...mapActions('user', ['getCurrentUser']),
-      setBlur () {
-        this.blurLayout = !this.blurLayout
-      }
+import { mapGetters, mapActions } from 'vuex'
+export default {
+  name: 'UserLayout',
+  computed: {
+    ...mapGetters('user', ['currentUser']),
+    productName () {
+      return window.sessionStorage.productName
+    }
+  },
+  created () {
+    const id = this.$fb.auth().currentUser.uid
+    this.getCurrentUser(id).then(result => {
+      this.$store.commit('user/setCurrentUserData', result)
+    })
+  },
+  data () {
+    return {
+      leftDrawerOpen: false,
+      blurLayout: false
+    }
+  },
+  methods: {
+    ...mapActions('auth', ['logoutUser']),
+    ...mapActions('user', ['getCurrentUser']),
+    setBlur () {
+      this.blurLayout = !this.blurLayout
     }
   }
+}
 </script>
 
 <style lang="stylus" scoped>
