@@ -81,7 +81,7 @@
             <q-item-label caption>@QuasarFramework</q-item-label>
           </q-item-section>
         </q-item>
-         <q-item clickable @click="logoutUser()">
+        <q-item clickable @click="logoutUser()">
           <q-item-section avatar>
             <q-icon name="power_settings_new" />
           </q-item-section>
@@ -99,33 +99,35 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-export default {
-  name: 'UserLayout',
-  computed: {
-    ...mapGetters('user', ['currentUser']),
-    productName () {
-      return window.sessionStorage.productName
-    }
-  },
-  created () {
-    const id = this.$fb.auth().currentUser.uid
-    this.getCurrentUser(id)
-  },
-  data () {
-    return {
-      leftDrawerOpen: false,
-      blurLayout: false
-    }
-  },
-  methods: {
-    ...mapActions('auth', ['logoutUser']),
-    ...mapActions('user', ['getCurrentUser']),
-    setBlur () {
-      this.blurLayout = !this.blurLayout
+  import { mapGetters, mapActions } from 'vuex'
+  export default {
+    name: 'UserLayout',
+    computed: {
+      ...mapGetters('user', ['currentUser']),
+      productName () {
+        return window.sessionStorage.productName
+      }
+    },
+    created () {
+      const id = this.$fb.auth().currentUser.uid
+      this.getCurrentUser(id).then(result => {
+        this.$store.commit('user/setCurrentUserData', result)
+      })
+    },
+    data () {
+      return {
+        leftDrawerOpen: false,
+        blurLayout: false
+      }
+    },
+    methods: {
+      ...mapActions('auth', ['logoutUser']),
+      ...mapActions('user', ['getCurrentUser']),
+      setBlur () {
+        this.blurLayout = !this.blurLayout
+      }
     }
   }
-}
 </script>
 
 <style lang="stylus" scoped>
