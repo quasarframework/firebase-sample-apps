@@ -81,7 +81,7 @@
             <q-item-label caption>@QuasarFramework</q-item-label>
           </q-item-section>
         </q-item>
-         <q-item clickable @click="logoutUser()">
+        <q-item clickable @click="logoutUser()">
           <q-item-section avatar>
             <q-icon name="power_settings_new" />
           </q-item-section>
