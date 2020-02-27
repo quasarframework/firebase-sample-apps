@@ -111,7 +111,7 @@ export default {
   created () {
     // Check that our app has access to the user id
     // from Firebase before the page renders
-    console.log(this.$store.state.auth.uid)
+    console.log('FIREBASE AUTH USER uid', this.$store.state.auth.uid)
   },
   data () {
     return {

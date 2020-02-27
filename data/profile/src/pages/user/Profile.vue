@@ -57,6 +57,14 @@ export default {
       customClass: 'loader'
     })
   },
+  mounted () {
+    const { currentUser } = this
+    if (currentUser) {
+      // Hide the loading screen if currentUser
+      // is available before the page renders
+      this.$q.loading.hide()
+    }
+  },
   computed: {
     ...mapGetters('user', ['currentUser']),
     editUserDialog: {
