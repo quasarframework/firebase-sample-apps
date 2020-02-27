@@ -109,8 +109,9 @@ export default {
     }
   },
   created () {
-    const id = this.$fb.auth().currentUser.uid
-    this.getCurrentUser(id)
+    // Check that our app has access to the user id
+    // from Firebase before the page renders
+    console.log(this.$store.state.auth.uid)
   },
   data () {
     return {
@@ -120,7 +121,6 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['logoutUser']),
-    ...mapActions('user', ['getCurrentUser']),
     setBlur () {
       this.blurLayout = !this.blurLayout
     }

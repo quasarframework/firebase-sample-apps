@@ -39,10 +39,10 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { QSpinnerGears } from 'quasar'
 export default {
-  name: 'UserSettings',
+  name: 'Profile',
   components: {
     'user-settings': () => import('./profile/UserSettings.vue')
   },
@@ -58,9 +58,7 @@ export default {
     })
   },
   computed: {
-    currentUser () {
-      return this.$store.state.user.currentUser
-    },
+    ...mapGetters('user', ['currentUser']),
     editUserDialog: {
       get () {
         return this.$store.state.user.editUserDialog

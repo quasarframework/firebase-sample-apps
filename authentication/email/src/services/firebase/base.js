@@ -16,7 +16,6 @@ export const auth = () => {
  * Async function providing the application time to
  * wait for firebase to initialize and determine if a
  * user is authenticated or not with only a single observable
- *
  */
 export const ensureAuthIsInitialized = async (store) => {
   if (store.state.auth.isReady) return true
