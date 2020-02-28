@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import { QUploaderBase } from 'quasar'
 export default {
   name: 'UserSettings',
@@ -68,9 +68,7 @@ export default {
     }
   },
   computed: {
-    currentUser () {
-      return this.$store.state.user.currentUser
-    },
+    ...mapGetters('user', ['currentUser']),
     meta () {
       return {
         id: this.currentUser.id,

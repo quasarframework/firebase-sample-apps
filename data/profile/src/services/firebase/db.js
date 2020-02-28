@@ -14,7 +14,7 @@ export const firestore = () => {
 }
 /**
  * @param  {String} collectionName - Firestore collection name
- * @param  {String} id - Uid to assign to doc in firestore collection
+ * @param  {String} id - Uid to assign to a doc in firestore collection
  */
 export const userRef = (collectionName, id) => {
   return firestore().collection(collectionName).doc(id)

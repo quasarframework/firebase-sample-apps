@@ -39,10 +39,10 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { QSpinnerGears } from 'quasar'
 export default {
-  name: 'UserSettings',
+  name: 'Profile',
   components: {
     'user-settings': () => import('./profile/UserSettings.vue')
   },
@@ -57,10 +57,16 @@ export default {
       customClass: 'loader'
     })
   },
+  mounted () {
+    const { currentUser } = this
+    if (currentUser) {
+      // Hide the loading screen if currentUser
+      // is available before the page renders
+      this.$q.loading.hide()
+    }
+  },
   computed: {
-    currentUser () {
-      return this.$store.state.user.currentUser
-    },
+    ...mapGetters('user', ['currentUser']),
     editUserDialog: {
       get () {
         return this.$store.state.user.editUserDialog

@@ -1,4 +1,5 @@
 export default {
   isAuthenticated: false,
-  isReady: false
+  isReady: false,
+  uid: ''
 }
