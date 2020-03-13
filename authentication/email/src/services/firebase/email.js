@@ -24,7 +24,7 @@ export const logoutUser = () => {
  * @param {String} email - A Valid email
  * @param {String} password - Password
  *
- * @return {Promist} UserCredentials
+ * @return {Promise} UserCredentials
  */
 export const loginWithEmail = (email, password) => {
   return firebase.auth().signInWithEmailAndPassword(email, password)

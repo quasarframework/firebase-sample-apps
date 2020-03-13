@@ -4,7 +4,7 @@ import 'firebase/auth'
 import { Notify } from 'quasar'
 
 /**
- * Firebase's auth interfact method
+ * Firebase's auth interface method
  * https: //firebase.google.com/docs/reference/js/firebase.auth.html#callable
  * @return {Object} currentUser object from firebase
  */
