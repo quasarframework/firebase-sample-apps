@@ -90,6 +90,9 @@ export const routerBeforeEach = async (router, store) => {
         } else {
           next('/auth/login')
         }
+      } else if ((to.path === '/auth/register' && isAuthenticated(store)) ||
+        (to.path === '/auth/login' && isAuthenticated(store))) {
+        next('/user')
       } else {
         next()
       }
