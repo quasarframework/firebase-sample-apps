@@ -40,7 +40,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import { QSpinnerGears } from 'quasar'
+import { QSpinnerGears, QSpinnerRadio } from 'quasar'
 export default {
   name: 'Profile',
   components: {
@@ -50,10 +50,11 @@ export default {
     return {}
   },
   created () {
+    const online = window.navigator.onLine
     this.$q.loading.show({
-      message: 'Loading your user information...',
-      backgroundColor: 'grey',
-      spinner: QSpinnerGears,
+      message: online ? 'Loading your user information...' : 'Looks like you\'ve lost network connectivity. Please connect back to your network to access your data.',
+      backgroundColor: online ? 'grey' : 'red-6',
+      spinner: online ? QSpinnerGears : QSpinnerRadio,
       customClass: 'loader'
     })
   },
