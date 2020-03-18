@@ -50,11 +50,13 @@ export default {
     return {}
   },
   created () {
-    const online = window.navigator.onLine
+    // Boolean to check if network is available
+    const isOnline = window.navigator.onLine
+
     this.$q.loading.show({
-      message: online ? 'Loading your user information...' : 'Looks like you\'ve lost network connectivity. Please connect back to your network to access your data.',
-      backgroundColor: online ? 'grey' : 'red-6',
-      spinner: online ? QSpinnerGears : QSpinnerRadio,
+      message: isOnline ? 'Loading your user information...' : 'Looks like you\'ve lost network connectivity. Please connect back to your network to access your data.',
+      backgroundColor: isOnline ? 'grey' : 'red-6',
+      spinner: isOnline ? QSpinnerGears : QSpinnerRadio,
       customClass: 'loader'
     })
   },
