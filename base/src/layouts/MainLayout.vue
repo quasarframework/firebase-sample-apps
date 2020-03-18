@@ -102,7 +102,7 @@
 
 <script>
 export default {
-  name: 'MyLayout',
+  name: 'MainLayout',
   computed: {
     productName () {
       return window.sessionStorage.productName

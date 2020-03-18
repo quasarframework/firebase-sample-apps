@@ -1,7 +1,7 @@
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MyLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [
       {
         path: '',
@@ -19,7 +19,7 @@ const routes = [
   },
   {
     path: '/auth',
-    component: () => import('layouts/MyLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [
       {
         path: 'forgotPassword',
