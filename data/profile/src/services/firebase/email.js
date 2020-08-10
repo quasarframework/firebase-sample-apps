@@ -14,13 +14,6 @@ export const createUserWithEmail = async (email, password) => {
 }
 
 /**
- * remove firebase auth token
- */
-export const logoutUser = () => {
-  return firebase.auth().signOut()
-}
-
-/**
  * @param {String} email - A Valid email
  * @param {String} password - Password
  *
