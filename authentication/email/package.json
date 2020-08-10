@@ -3,8 +3,6 @@
   "version": "0.0.1",
   "description": "Email authentication implementation with Firebase",
   "productName": "Firebase Sample App: Email Authentication",
-  "cordovaId": "org.cordova.quasar.app",
-  "capacitorId": "",
   "author": "Adam K. Purdy <admin@kpapro.com>",
   "private": true,
   "scripts": {
@@ -15,11 +13,12 @@
   "dependencies": {
     "@quasar/extras": "^1.9.3",
     "axios": "^0.19.2",
+    "core-js": "^3.0.0",
     "firebase": "^7.2.2",
     "quasar": "^1.12.13"
   },
   "devDependencies": {
-    "@quasar/app": "^1.9.6",
+    "@quasar/app": "^2.0.0",
     "@quasar/quasar-app-extension-qenv": "^1.0.3",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",
@@ -33,6 +32,14 @@
     "yarn": ">= 1.6.0"
   },
   "browserslist": [
-    "last 1 version, not dead, ie >= 11"
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 4 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
   ]
 }
