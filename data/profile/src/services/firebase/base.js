@@ -1,7 +1,6 @@
 
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import { Notify } from 'quasar'
 
 /**
  * Returns Firebase 's global namespace from which all Firebase services are accessed
@@ -87,33 +86,4 @@ export const isAuthenticated = (store) => {
  */
 export const logoutUser = () => {
   return auth().signOut()
-}
-
-/**
- * @param  {Object} router - Vue Router
- * @param  {Object} store - Vuex Store
- */
-export const routerBeforeEach = async (router, store) => {
-  router.beforeEach(async (to, from, next) => {
-    try {
-      await ensureAuthIsInitialized(store)
-      if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (isAuthenticated(store)) {
-          next()
-        } else {
-          next('/auth/login')
-        }
-      } else if ((to.path === '/auth/register' && isAuthenticated(store)) ||
-        (to.path === '/auth/login' && isAuthenticated(store))) {
-        next('/user/profile')
-      } else {
-        next()
-      }
-    } catch (err) {
-      Notify.create({
-        message: `ROUTER BEFORE EACH: ${err}`,
-        color: 'negative'
-      })
-    }
-  })
 }

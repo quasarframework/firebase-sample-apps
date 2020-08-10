@@ -11,7 +11,7 @@ Vue.use(Vuex)
  * If not building with SSR mode, you can
  * directly export the Store instantiation
  */
-
+let store = null
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
@@ -26,6 +26,8 @@ export default function (/* { ssrContext } */) {
     // for dev mode only
     strict: process.env.DEV
   })
-
+  store = Store
   return Store
 }
+
+export { store }

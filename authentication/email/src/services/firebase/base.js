@@ -1,7 +1,6 @@
 
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import { Notify } from 'quasar'
 
 /**
  * Firebase's auth interface method
@@ -39,20 +38,6 @@ export const fBInit = (config) => {
   return firebase.initializeApp(config)
 }
 
-/**
- * @param  {Object} store - Vuex store
- */
-export const isAuthenticated = (store) => {
-  return store.state.auth.isAuthenticated
-}
-
-/**
- * remove firebase auth token
- */
-export const logoutUser = () => {
-  return auth().signOut()
-}
-
 /** Handle the auth state of the user and
  * set it in the auth store module
  * @param  {Object} store - Vuex Store
@@ -74,33 +59,15 @@ export const handleOnAuthStateChanged = async (store, currentUser) => {
 }
 
 /**
- * @param  {Object} router - Vue Router
- * @param  {Object} store - Vuex Store
+ * @param  {Object} store - Vuex store
  */
-export const routerBeforeEach = async (router, store) => {
-  router.beforeEach(async (to, from, next) => {
-    try {
-      // Force the app to wait until Firebase has
-      // finished its initialization, and handle the
-      // authentication state of the user properly
-      await ensureAuthIsInitialized(store)
-      if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (isAuthenticated(store)) {
-          next()
-        } else {
-          next('/auth/login')
-        }
-      } else if ((to.path === '/auth/register' && isAuthenticated(store)) ||
-        (to.path === '/auth/login' && isAuthenticated(store))) {
-        next('/user')
-      } else {
-        next()
-      }
-    } catch (err) {
-      Notify.create({
-        message: `${err}`,
-        color: 'negative'
-      })
-    }
-  })
+export const isAuthenticated = (store) => {
+  return store.state.auth.isAuthenticated
+}
+
+/**
+ * remove firebase auth token
+ */
+export const logoutUser = () => {
+  return auth().signOut()
 }
