@@ -10,6 +10,8 @@ export const getCurrentUser = firestoreAction(({ bindFirestoreRef }, id) => {
   return bindFirestoreRef('currentUser', userRef('users', id))
 })
 
+export const resetCurrentUser = firestoreAction(({ unbindFirestoreRef }) => { unbindFirestoreRef('currentUser') })
+
 /**
  * @param  {Object} {state}
  * @param  {String} id
