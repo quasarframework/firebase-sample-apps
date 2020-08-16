@@ -29,9 +29,8 @@ export const loginUser = async function ($root, payload) {
   return $fb.loginWithEmail(email, password)
 }
 
-export const logoutUser = async function ({ commit }) {
-  await firestoreAction(({ unbindFirestoreRef }) => { unbindFirestoreRef('users') })
-  commit('user/setCurrentUserData', null, { root: true })
+export const logoutUser = async function ({ dispatch }) {
+  dispatch('user/setCurrentUserData', null, { root: true })
   this.$fb.logoutUser()
 }
 
