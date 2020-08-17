@@ -25,10 +25,7 @@ export default function (/* { store, ssrContext } */) {
     base: process.env.VUE_ROUTER_BASE
   })
 
-  // Setup the router to be intercepted on each route.
-  // This allows the application to halt rendering until
-  // Firebase is finished with its initialization process,
-  // and handle the user accordingly
+  // Navigational Guards
   Router.beforeEach(async (to, from, next) => {
     const {
       ensureAuthIsInitialized,
@@ -47,7 +44,7 @@ export default function (/* { store, ssrContext } */) {
         }
       } else if ((to.path === '/auth/register' && isAuthenticated(store)) ||
         (to.path === '/auth/login' && isAuthenticated(store))) {
-        next('/user')
+        next('/user/profile')
       } else {
         next()
       }
