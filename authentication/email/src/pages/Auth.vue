@@ -25,7 +25,7 @@
         color="primary"
         data-cy="password"
         label="PASSWORD"
-        :rules="[val =&gt; !!val || '*Field is required']"
+        :rules="[val => !!val || '*Field is required']"
         :type="isPwd ? 'password' : 'text'"
         @keyup.enter="onSubmit();"
       >
