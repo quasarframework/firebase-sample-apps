@@ -17,7 +17,7 @@
         lazy-rules="lazy-rules"
         name="email"
         type="email"
-        :rules="[val =&gt; !!val || '*Field is required', val =&gt; val.includes('@') &amp;&amp; val.includes('.') || '*Please Provide a valid email']"
+        :rules="[val => !!val || '*Field is required', val => val.includes('@') && val.includes('.') || '*Please Provide a valid email']"
       ></q-input>
       <q-btn class="full-width q-mt-md" color="primary" data-cy="submit" label="RESET PASSWORD" :loading="loading" @click="onSubmit">
         <template v-slot:loading>
