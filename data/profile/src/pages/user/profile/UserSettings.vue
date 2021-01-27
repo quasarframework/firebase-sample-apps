@@ -53,7 +53,7 @@ import { mapActions, mapGetters, mapMutations } from 'vuex'
 import { QUploaderBase } from 'quasar'
 export default {
   name: 'UserSettings',
-  mixins: [ QUploaderBase ],
+  mixins: [QUploaderBase],
   components: {
     'fbq-uploader': () => import('../../../components/FBQUploader.vue')
   },
@@ -128,7 +128,7 @@ export default {
     },
 
     uploadComplete (info) {
-      let fileNames = []
+      const fileNames = []
       info.files.forEach(file => fileNames.push(file))
       this.photoUpload = false
       this.$q.notify({

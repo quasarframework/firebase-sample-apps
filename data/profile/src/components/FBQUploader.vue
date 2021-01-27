@@ -3,7 +3,7 @@ import { QUploaderBase } from 'quasar'
 export default {
   name: 'FBQUploader',
 
-  mixins: [ QUploaderBase ],
+  mixins: [QUploaderBase],
   props: {
     meta: {
       type: Object
@@ -102,7 +102,7 @@ export default {
               this.updateComponent(index, 0, 'uploaded')
               const link = await profileImageStorageRef.snapshot.ref.getDownloadURL()
               userRef('users', meta.id).update({ [`${meta.photoType}Photo`]: link })
-              this.$emit('uploaded', { files: [ file.name ] })
+              this.$emit('uploaded', { files: [file.name] })
             })
             resolve()
           }

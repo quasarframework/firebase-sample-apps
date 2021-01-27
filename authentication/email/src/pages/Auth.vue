@@ -104,7 +104,8 @@ export default {
         .then(async success => {
           if (success) {
             this.$q.loading.show({
-              message: this.isRegistration ? 'Registering your account...'
+              message: this.isRegistration
+                ? 'Registering your account...'
                 : 'Authenticating your account...',
               backgroundColor: 'grey',
               spinner: QSpinnerGears,
