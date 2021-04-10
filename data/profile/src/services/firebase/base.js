@@ -12,9 +12,9 @@ export const self = () => {
 }
 
 /**
- * Returns Firebase 's auth service
+ * Returns Firebase's auth service
  * https://firebase.google.com/docs/reference/js/firebase.auth.html#callable
- * @return {Object} currentUser object from firebase
+ * @returns {Auth} - The Firebase Auth service interface
  */
 export const auth = () => {
   return firebase.auth()
@@ -23,8 +23,10 @@ export const auth = () => {
 /**
  * Async function providing the application time to
  * wait for firebase to initialize and determine if a
- * user is authenticated or not with only a single observable
- *
+ * user is authenticated or not with only a single observable.
+ * https://firebase.google.com/docs/reference/js/firebase.auth.Auth#onauthstatechanged
+ * @param {Object} store - Vuex store
+ * @returns {Promise} - A promise that return firebase.Unsubscribe
  */
 export const ensureAuthIsInitialized = (store) => {
   if (store.state.auth.isReady) return true
@@ -40,16 +42,20 @@ export const ensureAuthIsInitialized = (store) => {
   })
 }
 
-/** Convenience method to initialize firebase app
- * @param  {Object} config
- * @return {Object} App
+/**
+ * Convenience method to initialize firebase app
+ * https://firebase.google.com/docs/reference/js/firebase?authuser=1#initializeapp
+ * @param  {Object} config - FIREBASE_CONFIG during the build process
+ * @returns {App} - Creates and initializes a Firebase app instance.
  */
 export const fBInit = (config) => {
   return firebase.initializeApp(config)
 }
 
-/** Handle the auth state of the user and
- * set it in the auth store module
+/**
+ * Handle the auth state of the user and set it in the auth store module.
+ * Also sets up redirection if the user loses authentication. The action
+ * method will determine where the application routes to.
  * @param  {Object} store - Vuex Store
  * @param  {Object} currentUser - Firebase currentUser
  */
@@ -76,13 +82,15 @@ export const handleOnAuthStateChanged = async (store, currentUser) => {
 
 /**
  * @param  {Object} store - Vuex store
+ * @return {Boolean} - isAuthenticated
  */
 export const isAuthenticated = (store) => {
   return store.state.auth.isAuthenticated
 }
 
 /**
- * remove firebase auth token
+ * Removes firebase auth token
+ * @returns {Promise} - Void
  */
 export const logoutUser = () => {
   return auth().signOut()
