@@ -7,20 +7,22 @@
   "private": true,
   "scripts": {
     "dev": "QENV=DEV quasar dev",
+    "dev:win": "cross-env QENV=DEV quasar dev",
     "lint": "eslint --ext .js,.vue src",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.10.2",
+    "@quasar/extras": "^1.10.4",
     "core-js": "^3.8.3",
     "firebase": "^8.2.4",
-    "quasar": "^1.15.10",
+    "quasar": "^1.15.13",
     "vuexfire": "^3.2.5"
   },
   "devDependencies": {
-    "@quasar/app": "^2.2.4",
+    "@quasar/app": "^2.2.6",
     "@vue/eslint-config-standard": "^6.0.0",
     "babel-eslint": "^10.0.1",
+    "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
     "eslint": "^7.18.0",
     "eslint-config-standard": "^16.0.2",

@@ -9,6 +9,7 @@
 import { firestoreAction } from 'vuexfire'
 import User from '../../models/User.js'
 import { docRef } from '../../services/firebase/db.js'
+import { Notify } from 'quasar'
 
 export const addUserToUsersCollection = function (state, userRef) {
   const
@@ -42,9 +43,9 @@ export const createNewUser = async function ($root, data) {
  * @returns {function} - Firebase services function:
  * src/services/firebase/email.js > loginWithEmail
  */
-export const loginUser = async function ($root, payload) {
+export const loginUser = async function ($root, data) {
   const $fb = this.$fb
-  const { email, password } = payload
+  const { email, password } = data
   return $fb.loginWithEmail(email, password)
 }
 
@@ -52,9 +53,17 @@ export const loginUser = async function ($root, payload) {
  * @returns {function} - Firebase services function:
  * src/services/firebase/email.js > logoutUser
  */
-export const logoutUser = async function ({ state }) {
-  await firestoreAction(({ unbindFirestoreRef }) => { unbindFirestoreRef('currentUser') })
-  this.$fb.logoutUser()
+export const logoutUser = async function ({ commit }) {
+  try {
+    await firestoreAction(({ unbindFirestoreRef }) => { unbindFirestoreRef('currentUser') })
+    await this.$fb.logoutUser()
+    commit('common/setDrawerOpen', false, { root: true })
+  } catch (err) {
+    Notify.create({
+      type: 'webapp_error',
+      message: `An error as occured [logoutUser]: ${err}`
+    })
+  }
 }
 
 export function routeUserToAuth () {

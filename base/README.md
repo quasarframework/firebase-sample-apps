@@ -7,11 +7,22 @@ yarn
 ```
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
-*Note: This application makes use of [Qusar's QENV app extension](https://github.com/quasarframework/app-extension-qenv).*
 ```bash
 npm run dev
+or
+
+yarn run dev
+```
+
+Windwos users run:
+```bash
+npm run dev:win
+
+or
+
+yarn run dev:win
 ```
 
 ### Areas of focus
-- `serverConnetion.js` implmentation
+- `firebaseConnetion.js` implmentation
 - First Firebase service, `base.js`, created and used
