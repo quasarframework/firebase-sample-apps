@@ -12,14 +12,14 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.10.4",
+    "@quasar/extras": "^1.10.7",
     "core-js": "^3.8.3",
     "firebase": "^8.2.4",
-    "quasar": "^1.15.13",
+    "quasar": "^1.15.21",
     "vuexfire": "^3.2.5"
   },
   "devDependencies": {
-    "@quasar/app": "^2.2.6",
+    "@quasar/app": "^2.2.10",
     "@vue/eslint-config-standard": "^6.0.0",
     "babel-eslint": "^10.0.1",
     "cross-env": "^7.0.3",
